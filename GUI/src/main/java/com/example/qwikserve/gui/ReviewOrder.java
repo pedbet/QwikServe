@@ -8,7 +8,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
+
+import com.firebase.client.Firebase;
+import com.firebase.client.ValueEventListener;
+import com.firebase.client.DataSnapshot;
+
+
+
 
 public class ReviewOrder extends Activity implements View.OnClickListener {
     Order order;
@@ -41,7 +48,7 @@ public class ReviewOrder extends Activity implements View.OnClickListener {
             startActivity(intent2);
             finish();
         }
-        else if(v.getId()==R.id.button13);
+        else if(v.getId()==R.id.button13)
         {// start the final ordering activity
             Intent intent3 = new Intent(ReviewOrder.this,FinalOrder.class);
             intent3.putExtra("com.example.qwikserve.gui.Order.class",order);

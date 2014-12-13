@@ -10,10 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
+import com.firebase.client.ValueEventListener;
+
 public class FinalOrder extends Activity implements View.OnClickListener {
 
-    Order order;
-    EditText name;
+    public Order order;
+    public EditText name;
+
+    private Firebase ref;
+    private static final String FIREBASE_URL = "https://qwickserve.firebaseio.com/";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +32,7 @@ public class FinalOrder extends Activity implements View.OnClickListener {
         submit.setOnClickListener(this);
         Intent intent1 = getIntent();
         order = (Order) intent1.getSerializableExtra("com.example.qwikserve.gui.Order.class");
+        ref = new Firebase(FIREBASE_URL).child("cook");
 
     }
 
@@ -35,6 +44,10 @@ public class FinalOrder extends Activity implements View.OnClickListener {
             order.setName(name.getText().toString()); // get name from user input add to order object
             // NOTE: the toString method of order does not include customer name or price just the order strings, can be easily added if needed
             Toast.makeText(getApplicationContext(), "Thank you for your order, a waiter will be with you shortly.", Toast.LENGTH_SHORT).show();
+
+
+            ref.child(order.getID()).setValue(order);
+
             /*
                 Here is where you have to throw the object to wherever you need to throw it to via an intent
                 Intent intent = new Intent(ReviewOrder.this,<yourclass>.class);
